@@ -10,6 +10,4 @@ const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-console.log("Intitialized Firebase App : ",app);
-console.log("Intitialized Firebase Analytics : ",analytics);
+getAnalytics(app);

@@ -3,14 +3,11 @@ import firebase from "firebase/compat/app";
 import { clearUser } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHashtag, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
-
-    console.log("user -> ", user);
-
 
     function onLogout() {
         // Add the code to logout the user
@@ -35,7 +32,7 @@ const Navbar = () => {
 
     return (
         <nav className="bg-gray-900 text-white p-4 flex justify-between items-center shadow-md">
-            <div className="text-xl font-bold">MyApp</div>
+            <div className="text-xl font-bold"><FontAwesomeIcon icon={faHashtag}  style={{color: "#FFD43B",}}/> Social Nest </div>
             <div className="flex items-center gap-4">
                 {user && renderUserDetails()}
             </div>

@@ -40,7 +40,7 @@ const Feed = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen h-screen w-full bg-gradient-to-br from-gray-800 via-gray-900 to-black bg-opacity-50 backdrop-blur-2xl text-white p-6">
             <h1 className="text-3xl font-bold mb-4">Feed</h1>
-            {loading && <Spinner text={"Login / Signup in process"} />}
+            {loading && <Spinner text={"Loading your feed..."} />}
             <ul key="user-list" className="list-none p-0 w-full max-w-2xl">
                 {data.map((user) => (
                     <li key={user.id} className="border border-white/30 rounded-lg my-4 p-4 flex items-center bg-white/10 backdrop-blur-lg shadow-lg w-full">

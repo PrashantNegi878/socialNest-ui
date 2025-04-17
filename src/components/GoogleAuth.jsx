@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import fetchWithToken from "../utils/auth";
-import { setUser, clearUser } from "../store/slices/authSlice"; // Import Redux actions
+import { setUser } from "../store/slices/authSlice"; // Import Redux actions
 import { API_URLS } from "../config/urls"; // Import URLs
 import firebase from "firebase/compat/app";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,30 @@ import { useDispatch } from "react-redux";
 const GoogleAuth = ({ setLoading }) => {
   const dispatch = useDispatch(); // Get dispatch function from Redux store
   const [errorMessage, setErrorMessage] = useState(""); // State for error message
+
+  useEffect(() => {
+    setLoading(true);
+    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const token = await user.getIdToken();
+          const userObj = {
+            userName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            token,
+          };
+          dispatch(setUser(userObj));
+        } catch (error) {
+          console.error("Error fetching user token:", error);
+        } finally {
+        }
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [dispatch, setLoading]);
 
   async function handleAuth(action) {
     setLoading(true); // Ensure loading is set to true immediately
@@ -41,7 +65,7 @@ const GoogleAuth = ({ setLoading }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false); // Ensure loading is set to false after the process
+      setLoading(false); 
     }
   }
 
